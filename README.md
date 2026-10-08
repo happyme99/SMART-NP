@@ -14,7 +14,6 @@ The diagram shows the full routing design. This repository's `run` command write
 | `scripts/` | Environment, model, and run commands |
 | `configs/models.json` | GGUF model registry; default: `qwen3.5-9b` |
 | `data/README.md` | Input layout and example paths |
-| `tests/` | Descriptor and retrieval checks |
 | `SMART-NP/`, `.tools/`, `models/`, `data/dataset/`, `data/descriptor-ranks/`, `data/uncertain/`, `results/` | Local environment, downloads, inputs, caches, and outputs (ignored by Git) |
 
 ## Setup
