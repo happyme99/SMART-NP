@@ -1,6 +1,6 @@
 # Data layout
 
-Large inputs stay outside Git. Pass each required file explicitly.
+Large inputs stay outside Git. Download them from the data-v1 release as shown in the [root README](../README.md), then pass each required file explicitly.
 
 Pass explicit train/test/calibration files to `scripts/run.sh`:
 

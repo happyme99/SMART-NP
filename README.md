@@ -16,6 +16,23 @@ The diagram shows the full routing design. This repository's `run` command write
 | `data/README.md` | Input layout and example paths |
 | `SMART-NP/`, `.tools/`, `models/`, `data/dataset/`, `data/descriptor-ranks/`, `data/uncertain/`, `results/` | Local environment, downloads, inputs, caches, and outputs (ignored by Git) |
 
+## Clone and download data
+
+The 49 input files in `data/dataset/` are distributed separately as the [data-v1 release](https://github.com/happyme99/SMART-NP/releases/tag/data-v1). From a fresh clone, download the archive and checksum, verify them, then extract into `data/`:
+
+```bash
+git clone https://github.com/happyme99/SMART-NP.git
+cd SMART-NP
+mkdir -p data/dataset
+curl -fL --retry 3 -C - -o data/dataset/smart-np-dataset-v1.tar.gz https://github.com/happyme99/SMART-NP/releases/download/data-v1/smart-np-dataset-v1.tar.gz
+curl -fL --retry 3 -o data/dataset/smart-np-dataset-v1.tar.gz.sha256 https://github.com/happyme99/SMART-NP/releases/download/data-v1/smart-np-dataset-v1.tar.gz.sha256
+(cd data/dataset && sha256sum -c smart-np-dataset-v1.tar.gz.sha256) &&
+  tar -xzf data/dataset/smart-np-dataset-v1.tar.gz -C data &&
+  rm data/dataset/smart-np-dataset-v1.tar.gz data/dataset/smart-np-dataset-v1.tar.gz.sha256
+```
+
+The extracted files land directly in `data/dataset/`. Keep the archive and checksum until verification and extraction succeed.
+
 ## Setup
 
 Run from the repository root. Setup needs `git`, `cmake`, `uv` (installed by `build_env.sh` if missing), and CUDA with `nvcc` for the `llama.cpp` build.
@@ -36,7 +53,7 @@ For another model, add it to `configs/models.json` and pass `--model NAME` to `b
 
 ## Run with the local GIN example
 
-Input tables need `SMILES` and `true_class` columns. Embedding `.pt` files need a 2D tensor in table row order; softmax `.pt` files need `probabilities` and `class_to_idx`. Train, test, and calibration files must use matching rows within each split. Large inputs under `data/dataset/` are local files, not included in Git.
+Input tables need `SMILES` and `true_class` columns. Embedding `.pt` files need a 2D tensor in table row order; softmax `.pt` files need `probabilities` and `class_to_idx`. Train, test, and calibration files must use matching rows within each split. The downloaded inputs under `data/dataset/` remain outside Git.
 
 ```bash
 ./scripts/run.sh \
