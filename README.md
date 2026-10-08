@@ -18,14 +18,13 @@ The diagram shows the full routing design. This repository's `run` command write
 
 ## Clone and download data
 
-The 49 input files in `data/dataset/` are distributed separately as the [data-v1 release](https://github.com/happyme99/SMART-NP/releases/tag/data-v1). From a fresh clone, download the archive and checksum, verify them, then extract into `data/`:
+The 49 input files in `data/dataset/` are distributed separately as the [data-v1 release](https://github.com/happyme99/SMART-NP/releases/tag/data-v1). This repository is private, so you need access to it and an authenticated [GitHub CLI](https://cli.github.com/) (`gh auth login`). From a fresh clone, download the archive and checksum, verify them, then extract into `data/`:
 
 ```bash
-git clone https://github.com/happyme99/SMART-NP.git
+gh repo clone happyme99/SMART-NP
 cd SMART-NP
 mkdir -p data/dataset
-curl -fL --retry 3 -C - -o data/dataset/smart-np-dataset-v1.tar.gz https://github.com/happyme99/SMART-NP/releases/download/data-v1/smart-np-dataset-v1.tar.gz
-curl -fL --retry 3 -o data/dataset/smart-np-dataset-v1.tar.gz.sha256 https://github.com/happyme99/SMART-NP/releases/download/data-v1/smart-np-dataset-v1.tar.gz.sha256
+gh release download data-v1 -R happyme99/SMART-NP -D data/dataset
 (cd data/dataset && sha256sum -c smart-np-dataset-v1.tar.gz.sha256) &&
   tar -xzf data/dataset/smart-np-dataset-v1.tar.gz -C data &&
   rm data/dataset/smart-np-dataset-v1.tar.gz data/dataset/smart-np-dataset-v1.tar.gz.sha256
