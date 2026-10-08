@@ -48,11 +48,11 @@ class TrainIndex:
         return RetrievedExample(rank=rank, train_idx=index, class_name=str(row["true_class"]).strip(), smiles=str(row["SMILES"]).strip(), similarity=similarity)
 
 
-def prompt_examples(retrieved: list[RetrievedExample], baseline: RetrievedExample | None, baseline_label: str, topk: int) -> tuple[list[RetrievedExample], RetrievedExample | None]:
+def prompt_examples(retrieved: list[RetrievedExample], baseline: RetrievedExample | None, baseline_label: str, topk: int) -> list[RetrievedExample]:
     primary = retrieved[:topk]
     covered = next((item for item in primary if item.class_name == baseline_label), None)
     if covered is not None:
-        baseline, examples = covered, primary
+        examples = primary
     else:
         examples = primary + ([baseline] if baseline is not None else [])
-    return [RetrievedExample(rank=index, train_idx=item.train_idx, class_name=item.class_name, smiles=item.smiles, similarity=item.similarity) for index, item in enumerate(examples, 1)], baseline
+    return [RetrievedExample(rank=index, train_idx=item.train_idx, class_name=item.class_name, smiles=item.smiles, similarity=item.similarity) for index, item in enumerate(examples, 1)]

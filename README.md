@@ -1,9 +1,9 @@
-# naturalRAG
+# SMART-NP
 
 Current research pipeline, reduced to its working core:
 
 1. retrieve low-confidence natural-product queries with backbone embeddings;
-2. select per-class RDKit descriptors ranked by weighted mutual information;
+2. select per-class RDKit descriptors ranked by mutual information;
 3. ask a local GGUF LLM through `llama.cpp`;
 4. optionally mark high-MSP predictions with MSP local FDR.
 
@@ -14,7 +14,7 @@ Current research pipeline, reduced to its working core:
 ./scripts/build_model.sh
 ```
 
-This installs `uv` if needed, then runs `uv sync` to create `naturalRAG/` and install project packages, downloads default `qwen3.5-9b` GGUF under `models/`, and builds CUDA `llama.cpp` under `.tools/llama.cpp`.
+This installs `uv` if needed, then runs `uv sync` to create `SMART-NP/` and install project packages, downloads default `qwen3.5-9b` GGUF under `models/`, and builds CUDA `llama.cpp` under `.tools/llama.cpp`.
 Later `scripts/run.sh` calls detect both files and print `ready; build and download skipped`.
 
 Use another registry model with `./scripts/build_model.sh --model NAME`. Add it to `configs/models.json`; or supply an ad-hoc model:

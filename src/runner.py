@@ -104,7 +104,7 @@ def run(
             retrieved = index.topk(query_vectors[row_idx], topk)
             baseline_label = str(item["pred_class"]).strip()
             baseline = index.top1_for_class(query_vectors[row_idx], baseline_label)
-            examples, baseline = prompt_examples(retrieved, baseline, baseline_label, topk)
+            examples = prompt_examples(retrieved, baseline, baseline_label, topk)
             selected_descriptors = descriptor_store.select([baseline_label, *(example.class_name for example in examples)])
             system, user = build_prompt(str(item["SMILES"]), examples, selected_descriptors)
             raw, finish_reason = client.chat(system, user)

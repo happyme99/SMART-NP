@@ -53,9 +53,9 @@ def installed_model_path(name: str) -> Path:
     return model_path(resolve_model(name))
 
 
-def command(args: list[str], cwd: Path | None = None) -> None:
+def command(args: list[str]) -> None:
     print("+", " ".join(args), flush=True)
-    subprocess.run(args, cwd=cwd, check=True)
+    subprocess.run(args, check=True)
 
 
 def need(executable: str) -> None:
@@ -86,11 +86,13 @@ def build_llama(ref: str, cuda: bool) -> Path:
     binary = source / "build/bin/llama-server"
     if not source.is_dir():
         command(["git", "clone", "--depth", "1", "--branch", ref, LLAMA_REPO, str(source)])
+    cache = build / "CMakeCache.txt"
+    if cache.is_file() and f"CMAKE_HOME_DIRECTORY:INTERNAL={source}" not in cache.read_text(errors="ignore"):
+        shutil.rmtree(build)
     cmake = ["cmake", "-S", str(source), "-B", str(build), "-DCMAKE_BUILD_TYPE=Release"]
     if cuda:
         cuda_compiler = find_cuda_compiler()
         cuda_root = cuda_compiler.parent.parent
-        cache = build / "CMakeCache.txt"
         if cache.is_file():
             cached = cache.read_text(errors="ignore")
             if f"CMAKE_CUDA_COMPILER:STRING={cuda_compiler}" not in cached:
