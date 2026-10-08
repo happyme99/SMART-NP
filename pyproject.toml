@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "naturalrag"
+version = "0.1.0"
+description = "Descriptor-selected retrieval-augmented natural-product classification"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "gpustat>=1.1.1",
+  "huggingface-hub>=0.32",
+  "numpy>=1.26",
+  "pandas>=2.2",
+  "rdkit>=2024.3",
+  "scikit-learn>=1.4",
+  "statsmodels>=0.14",
+  "torch>=2.2",
+  "tqdm>=4.70.0",
+]
+
+[project.scripts]
+naturalrag = "cli:main"
+
+[tool.setuptools]
+py-modules = ["cli", "data", "model_setup", "prompt", "runner"]
+
+[tool.setuptools.packages.find]
+where = ["src"]

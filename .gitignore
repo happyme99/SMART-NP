@@ -1,0 +1,11 @@
+/naturalRAG/
+/.venv/
+.tools/
+models/
+results/
+data/dataset/
+data/descriptor-ranks/
+data/uncertain/
+__pycache__/
+*.py[cod]
+*.egg-info/
