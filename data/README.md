@@ -2,7 +2,7 @@
 
 Large inputs stay outside Git. Pass each required file explicitly.
 
-Pass explicit train/test/val files to `scripts/run.sh`:
+Pass explicit train/test/calibration files to `scripts/run.sh`:
 
 ```text
 ./scripts/run.sh \
