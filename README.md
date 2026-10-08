@@ -2,10 +2,10 @@
 
 Current research pipeline, reduced to its working core:
 
-1. retrieve low-confidence natural-product queries with backbone embeddings;
-2. select per-class RDKit descriptors ranked by mutual information;
-3. ask a local GGUF LLM through `llama.cpp`;
-4. optionally mark high-MSP predictions with MSP local FDR.
+1. select test queries with MSP local FDR above 0.05 for LLM refinement;
+2. retrieve selected queries with backbone embeddings;
+3. select per-class RDKit descriptors ranked by mutual information;
+4. ask a local GGUF LLM through `llama.cpp`.
 
 ## One-time setup
 
@@ -34,3 +34,5 @@ naturalrag run --train-table train.tsv --train-embeddings train.pt --test-table 
 ```
 
 First run shows descriptor-rank tqdm and writes `data/descriptor-ranks/descriptor_selection_results.tsv`; later runs report the cache and reuse it. A 3-stage LFDR tqdm normalizes MSP with val, estimates test local FDR using `statsmodels`, and saves test rows with `lfdr > 0.05` to a softmax-specific file under `data/uncertain/`.
+
+The results TSV and printed accuracy cover only the selected queries. Classifier-only predictions for the remaining test queries are not merged into the results.
