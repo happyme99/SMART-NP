@@ -41,7 +41,7 @@ curl -sS https://webi.sh/gh | sh
 
 Release assets are separate from Git, so the directory starts empty.
 
-The input files used in the examples are distributed separately through the [data-v1 release](https://github.com/happyme99/SMART-NP/releases/tag/data-v1). Download and extract them into `data/dataset/` with:
+The example input files are distributed separately through the [data-v1 release](https://github.com/happyme99/SMART-NP/releases/tag/data-v1). Download and extract them into `data/dataset/` with:
 
 ```bash
 uv run scripts/download_data.sh
