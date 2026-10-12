@@ -33,20 +33,18 @@ All commands below assume `uv` is available. If it is missing, install it once w
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-If `gh` is missing, install it without `sudo` using [Webi](https://github.com/cli/cli/blob/trunk/docs/install_linux.md#webi):
+If `gh` is missing, install it using [Webi](https://github.com/cli/cli/blob/trunk/docs/install_linux.md#webi):
 
 ```bash
 curl -sS https://webi.sh/gh | sh
 ```
-
-Webi is community-maintained. If `gh` is not found after installation, open a new terminal.
 
 Release assets are separate from Git, so the directory starts empty.
 
 Download the dataset:
 
 ```bash
-uv run --no-project scripts/download_data.sh
+uv run scripts/download_data.sh
 ```
 
 The script opens GitHub sign-in if needed, downloads both release assets, verifies the SHA-256 checksum, and extracts the 49 input files into `data/dataset/`. It refuses to overwrite existing data.
