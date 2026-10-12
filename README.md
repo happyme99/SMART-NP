@@ -27,19 +27,15 @@ git clone https://github.com/happyme99/SMART-NP.git
 cd SMART-NP
 ```
 
-`data/dataset/` is included in the clone. Release assets are separate from Git, so the directory starts empty.
+Release assets are separate from Git, so the directory starts empty.
 
-Sign in to GitHub in your browser, open the release above, and download both `smart-np-dataset-v1.tar.gz` and `smart-np-dataset-v1.tar.gz.sha256`. If they land in `~/Downloads`, move them into `data/dataset/`, verify, and extract:
+Install [GitHub CLI](https://cli.github.com/) (`gh`), then run:
 
 ```bash
-mv ~/Downloads/smart-np-dataset-v1.tar.gz data/dataset/
-mv ~/Downloads/smart-np-dataset-v1.tar.gz.sha256 data/dataset/
-(cd data/dataset && sha256sum -c smart-np-dataset-v1.tar.gz.sha256) &&
-  tar -xzf data/dataset/smart-np-dataset-v1.tar.gz -C data &&
-  rm data/dataset/smart-np-dataset-v1.tar.gz data/dataset/smart-np-dataset-v1.tar.gz.sha256
+./scripts/download_data.sh
 ```
 
-The extracted files land directly in `data/dataset/`. Keep the archive and checksum until verification and extraction succeed.
+The script opens GitHub sign-in if needed, downloads both release assets, verifies the SHA-256 checksum, and extracts the 49 input files into `data/dataset/`. It refuses to overwrite existing data.
 
 ## Setup
 
