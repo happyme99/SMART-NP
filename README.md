@@ -20,7 +20,7 @@ The diagram shows the full routing design. This repository's `run` command write
 
 ## Clone and download data
 
-The 49 input files in `data/dataset/` are distributed separately as the [data-v1 release](https://github.com/happyme99/SMART-NP/releases/tag/data-v1). Clone the private repository with your GitHub credentials:
+Clone the private repository with your GitHub credentials:
 
 ```bash
 git clone https://github.com/happyme99/SMART-NP.git
@@ -41,7 +41,7 @@ curl -sS https://webi.sh/gh | sh
 
 Release assets are separate from Git, so the directory starts empty.
 
-Download the dataset:
+Download the example dataset, The 49 input files in `data/dataset/` are distributed separately as the [data-v1 release](https://github.com/happyme99/SMART-NP/releases/tag/data-v1).:
 
 ```bash
 uv run scripts/download_data.sh
