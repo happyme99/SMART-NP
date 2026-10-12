@@ -47,7 +47,7 @@ The example input files are distributed separately through the [data-v1 release]
 uv run scripts/download_data.sh
 ```
 
-The script opens GitHub sign-in if needed, downloads both release assets, verifies the SHA-256 checksum, and extracts the 49 input files into `data/dataset/`. It refuses to overwrite existing data.
+The dataset contains 49 example input files, including train, test, and calibration tables (`.tsv`), GIN embeddings (`.pt`), and classifier softmax outputs (`.pt`). The example below uses one matching set of these files.
 
 ## Setup
 
