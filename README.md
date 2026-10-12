@@ -27,12 +27,21 @@ git clone https://github.com/happyme99/SMART-NP.git
 cd SMART-NP
 ```
 
+All commands below assume `uv` is available. If it is missing, install it once with the [official installer](https://docs.astral.sh/uv/getting-started/installation/) (`curl` required):
+
+```bash
+if ! command -v uv >/dev/null 2>&1; then
+  curl -LsSf https://astral.sh/uv/install.sh | sh
+  export PATH="$HOME/.local/bin:$PATH"
+fi
+```
+
 Release assets are separate from Git, so the directory starts empty.
 
 Install [GitHub CLI](https://cli.github.com/) (`gh`), then run:
 
 ```bash
-./scripts/download_data.sh
+uv run --no-project scripts/download_data.sh
 ```
 
 The script opens GitHub sign-in if needed, downloads both release assets, verifies the SHA-256 checksum, and extracts the 49 input files into `data/dataset/`. It refuses to overwrite existing data.
@@ -47,9 +56,9 @@ Choose the command for the step you want. Run it from the repository root:
 | Create the environment, build `llama.cpp`, and download Qwen | `./scripts/build_model.sh` |
 | Do the setup and run inference | `./scripts/run.sh` with the input files shown below |
 
-`build_env.sh` installs `uv` if needed and uses `pyproject.toml` and `uv.lock` to create `SMART-NP/`. Keep both files in Git. `build_model.sh` also runs that step, then builds `.tools/llama.cpp/build/bin/llama-server` and downloads the default `Qwen3.5-9B-Q4_K_M.gguf` to `models/qwen3.5-9b/`. `run.sh` sets up the environment and, unless `--model-path` is supplied, also sets up the model before inference. Existing files are reused.
+`build_env.sh` uses `pyproject.toml` and `uv.lock` to create `SMART-NP/`. Keep both files in Git. `build_model.sh` also runs that step, then builds `.tools/llama.cpp/build/bin/llama-server` and downloads the default `Qwen3.5-9B-Q4_K_M.gguf` to `models/qwen3.5-9b/`. `run.sh` sets up the environment and, unless `--model-path` is supplied, also sets up the model before inference. Existing files are reused.
 
-Requirements: Python 3.10+, `git`, `cmake`, CUDA with `nvcc` for the default model build, and `curl` or `wget` if `uv` is missing. For a CPU build, use `./scripts/build_model.sh --cpu` and pass `--model-path models/qwen3.5-9b/Qwen3.5-9B-Q4_K_M.gguf` to `run.sh`.
+Requirements: Python 3.10+, `git`, `cmake`, and CUDA with `nvcc` for the default model build. For a CPU build, use `./scripts/build_model.sh --cpu` and pass `--model-path models/qwen3.5-9b/Qwen3.5-9B-Q4_K_M.gguf` to `run.sh`.
 
 For another model, add it to `configs/models.json` and pass `--model NAME` to `build_model.sh` and `run.sh`. To download an unregistered model, supply its local path when running:
 
