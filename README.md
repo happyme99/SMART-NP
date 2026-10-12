@@ -47,7 +47,7 @@ The example input files are distributed separately through the [data-v1 release]
 uv run scripts/download_data.sh
 ```
 
-The dataset contains 49 example input files, including train, test, and calibration tables (`.tsv`), GIN embeddings (`.pt`), and classifier softmax outputs (`.pt`). The example below uses one matching set of these files.
+The dataset contains 49 example input files for MolFormer, GIN, NaFM, and NPClassifier, including train, test, and calibration tables (`.tsv`), embeddings (`.pt`), and classifier softmax outputs (`.pt`). The run example below uses the GIN random split.
 
 ## Setup
 
