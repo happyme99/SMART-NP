@@ -33,18 +33,13 @@ All commands below assume `uv` is available. If it is missing, install it once w
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-On Ubuntu or Debian, if `gh` is missing, install it from the [official GitHub CLI apt repository](https://github.com/cli/cli/blob/trunk/docs/install_linux.md):
+If `gh` is missing, install it without `sudo` using [Webi](https://github.com/cli/cli/blob/trunk/docs/install_linux.md#webi):
 
 ```bash
-if ! command -v gh >/dev/null 2>&1; then
-  sudo install -d -m 755 /etc/apt/keyrings
-  curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg >/dev/null
-  sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg
-  echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null
-  sudo apt update
-  sudo apt install -y gh
-fi
+curl -sS https://webi.sh/gh | sh
 ```
+
+Webi is community-maintained. If `gh` is not found after installation, open a new terminal.
 
 Release assets are separate from Git, so the directory starts empty.
 
