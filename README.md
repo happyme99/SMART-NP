@@ -13,8 +13,10 @@ The diagram shows the full routing design. This repository's `run` command write
 | `src/` | CLI, LFDR routing, embedding retrieval, descriptor ranking, prompt construction, and LLM inference |
 | `scripts/` | Environment, model, and run commands |
 | `configs/models.json` | GGUF model registry; default: `qwen3.5-9b` |
+| `pyproject.toml`, `uv.lock` | Python dependencies, CLI entry point, and locked versions (tracked by Git) |
 | `data/README.md` | Input layout and example paths |
-| `SMART-NP/`, `.tools/`, `models/`, `data/dataset/`, `data/descriptor-ranks/`, `data/uncertain/`, `results/` | Local environment, downloads, inputs, caches, and outputs (ignored by Git) |
+| `SMART-NP/`, `.tools/`, `models/`, `data/descriptor-ranks/`, `data/uncertain/`, `results/` | Local environment, downloads, caches, and outputs (ignored by Git) |
+| `data/dataset/` | Input directory included in Git; downloaded files remain ignored |
 
 ## Clone and download data
 
@@ -23,10 +25,9 @@ The 49 input files in `data/dataset/` are distributed separately as the [data-v1
 ```bash
 git clone https://github.com/happyme99/SMART-NP.git
 cd SMART-NP
-mkdir -p data/dataset
 ```
 
-Release assets are separate from Git, so `git clone` does not include the dataset.
+`data/dataset/` is included in the clone. Release assets are separate from Git, so the directory starts empty.
 
 Sign in to GitHub in your browser, open the release above, and download both `smart-np-dataset-v1.tar.gz` and `smart-np-dataset-v1.tar.gz.sha256`. If they land in `~/Downloads`, move them into `data/dataset/`, verify, and extract:
 
@@ -42,14 +43,17 @@ The extracted files land directly in `data/dataset/`. Keep the archive and check
 
 ## Setup
 
-Run from the repository root. Setup needs `git`, `cmake`, `uv` (installed by `build_env.sh` if missing), and CUDA with `nvcc` for the `llama.cpp` build.
+Choose the command for the step you want. Run it from the repository root:
 
-```bash
-./scripts/build_env.sh
-./scripts/build_model.sh
-```
+| Goal | Command |
+| --- | --- |
+| Create the Python environment only | `./scripts/build_env.sh` |
+| Create the environment, build `llama.cpp`, and download Qwen | `./scripts/build_model.sh` |
+| Do the setup and run inference | `./scripts/run.sh` with the input files shown below |
 
-`build_env.sh` creates `SMART-NP/` and installs packages from `uv.lock`. `build_model.sh` downloads the default GGUF into `models/qwen3.5-9b/` and builds `llama-server` in `.tools/llama.cpp/`. Existing model and server files are reused.
+`build_env.sh` installs `uv` if needed and uses `pyproject.toml` and `uv.lock` to create `SMART-NP/`. Keep both files in Git. `build_model.sh` also runs that step, then builds `.tools/llama.cpp/build/bin/llama-server` and downloads the default `Qwen3.5-9B-Q4_K_M.gguf` to `models/qwen3.5-9b/`. `run.sh` sets up the environment and, unless `--model-path` is supplied, also sets up the model before inference. Existing files are reused.
+
+Requirements: Python 3.10+, `git`, `cmake`, CUDA with `nvcc` for the default model build, and `curl` or `wget` if `uv` is missing. For a CPU build, use `./scripts/build_model.sh --cpu` and pass `--model-path models/qwen3.5-9b/Qwen3.5-9B-Q4_K_M.gguf` to `run.sh`.
 
 For another model, add it to `configs/models.json` and pass `--model NAME` to `build_model.sh` and `run.sh`. To download an unregistered model, supply its local path when running:
 

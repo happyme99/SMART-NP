@@ -3,7 +3,8 @@
 .tools/
 models/
 results/
-data/dataset/
+data/dataset/*
+!data/dataset/.gitkeep
 data/descriptor-ranks/
 data/uncertain/
 __pycache__/
