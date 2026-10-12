@@ -27,14 +27,13 @@ git clone https://github.com/happyme99/SMART-NP.git
 cd SMART-NP
 ```
 
-All commands below assume `uv` is available. If it is missing, install it once with the [official installer](https://docs.astral.sh/uv/getting-started/installation/) (`curl` required):
+All commands below assume `uv` is available. If it is missing, install it once with the [official installer](https://docs.astral.sh/uv/getting-started/installation/):
 
 ```bash
-if ! command -v uv >/dev/null 2>&1; then
-  curl -LsSf https://astral.sh/uv/install.sh | sh
-  export PATH="$HOME/.local/bin:$PATH"
-fi
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
+
+Open a new shell if `uv` is not found immediately after installation.
 
 Release assets are separate from Git, so the directory starts empty.
 
