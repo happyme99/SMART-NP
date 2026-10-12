@@ -47,7 +47,7 @@ The example input files are distributed separately through the [data-v1 release]
 uv run scripts/download_data.sh
 ```
 
-The dataset contains 49 example input files for MolFormer, GIN, NaFM, and NPClassifier, including train, test, and calibration tables (`.tsv`), embeddings (`.pt`), and classifier softmax outputs (`.pt`). The run example below uses the GIN random split.
+The release contains 46 TSV/PT files: 11 each for MolFormer, GIN, NaFM, and NPClassifier, plus the shared `random_train.tsv` and `random_test.tsv`. MolFormer uses those shared tables for its train and test embeddings because it has no model-specific train/test tables in the archive. The GIN example below uses its own matching files.
 
 ## Setup
 
@@ -76,9 +76,9 @@ Input tables need `SMILES` and `true_class` columns. Embedding `.pt` files need 
 
 ```bash
 ./scripts/run.sh \
-  --train-table data/dataset/random_train.tsv \
+  --train-table data/dataset/gin_random_train.tsv \
   --train-embeddings data/dataset/gin_random_train_emb.pt \
-  --test-table data/dataset/random_test.tsv \
+  --test-table data/dataset/gin_random_test.tsv \
   --test-embeddings data/dataset/gin_random_test_emb.pt \
   --test-softmax data/dataset/gin_random_test_softmax.pt \
   --calibration-table data/dataset/gin_random_calibration.tsv \
