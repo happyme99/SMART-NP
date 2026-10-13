@@ -114,5 +114,3 @@ uv run scripts/run.sh \
   --calibration-softmax data/dataset/gin_random_calibration_softmax.pt \
   --output results/gin_results.tsv --max-queries 100 # Optional
 ```
-
-The first run ranks descriptors into `data/descriptor-ranks/random_descriptor_selection_results.tsv` and saves routed test rows in `data/uncertain/gin_random_test_softmax_lfdr_uncertain_samples.tsv`. Descriptor ranks are named using the `random`, `scaffold`, or `logp` token in the train table filename, so each split generates and reuses its own ranks across backbones. Other filenames use the train table stem as the prefix. The old unprefixed `descriptor_selection_results.tsv` is not reused. If you change the training data within a split, remove that split's rank file to recompute it. Without `--output`, LLM predictions go to a timestamped TSV under `results/` with `SMILES`, `true`, `backbone_pred`, and `llm_pred`; printed accuracy covers those routed rows only. Use `--output PATH` for a fixed result path and `--resume` to continue that file.
