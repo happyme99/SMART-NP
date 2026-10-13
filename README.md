@@ -1,32 +1,32 @@
 # SMART-NP
 
-SMART-NP refines natural-product class predictions for test samples whose classifier confidence is uncertain. It uses MSP local FDR (LFDR) to route samples, retrieves training examples by backbone embedding, selects class-specific RDKit descriptors by mutual information, and asks a local GGUF LLM for a class label.
+SMART-NP refines natural-product class predictions for test samples whose classifier confidence is uncertain. It uses local false discovery rate (LFDR) to route samples, retrieves training examples by classifier embedding, selects class-specific chemical descriptors by mutual information, and asks a local GGUF LLM for reclassification.
 
 ![SMART-NP full pipeline](full_pipeline.png)
 
-The diagram shows the full routing design. This repository's `run` command writes results **only for samples routed to the LLM** (`LFDR > 0.05`). It does not merge classifier predictions for accepted samples (`LFDR <= 0.05`) into the result file.
+The diagram shows the full pipeline. 
 
 ## Repository layout
 
 ```text
 .
 ├── .gitignore
-├── .tools/                  # llama.cpp source and build (gitignored)
-├── .venv/                   # Local uv environment (gitignored)
+├── .tools/                  
+├── .venv/                   
 ├── README.md
-├── SMART-NP/                # Python environment created by build_env.sh (gitignored)
+├── SMART-NP/                
 ├── configs/
 │   └── models.json          # GGUF model registry; default: qwen3.5-9b
 ├── data/
 │   ├── README.md            # Input layout and example paths
-│   ├── dataset/             # Downloaded TSV/PT inputs (gitignored)
+│   ├── dataset/             # Downloaded TSV/PT inputs 
 │   │   └── .gitkeep         # Keeps the empty input directory in Git
-│   ├── descriptor-ranks/    # Descriptor ranks per split (gitignored)
-│   └── uncertain/           # LFDR uncertain-sample caches (gitignored)
+│   ├── descriptor-ranks/    # Descriptor ranks per split 
+│   └── uncertain/           # LFDR uncertain-sample caches 
 ├── full_pipeline.png
-├── models/                  # Downloaded GGUF models (gitignored)
-├── pyproject.toml           # Python dependencies and CLI entry point
-├── results/                 # LLM prediction TSV files (gitignored)
+├── models/                  # Downloaded GGUF models 
+├── pyproject.toml           
+├── results/                 # LLM prediction TSV files 
 ├── scripts/
 │   ├── build_env.sh         # Create the Python environment
 │   ├── build_model.sh       # Build llama.cpp and download the model
@@ -34,15 +34,15 @@ The diagram shows the full routing design. This repository's `run` command write
 │   └── run.sh               # Set up and run inference
 ├── src/
 │   ├── cli.py               # Command-line arguments
-│   ├── confidence/          # MSP local-FDR routing
+│   ├── confidence/          # MSP--LFDR routing
 │   ├── data.py              # Input loading and validation
-│   ├── descriptor/          # RDKit descriptors and class-specific ranks
+│   ├── descriptor/          # Chemical descriptors and class-aware ranking
 │   ├── llm/                 # llama-server and label extraction
 │   ├── model_setup.py       # Model registry, downloads, and llama.cpp setup
 │   ├── prompt.py            # Prompt construction
 │   ├── retrieval/           # Training-example retrieval by embedding
 │   └── runner.py            # Inference pipeline
-└── uv.lock                  # Locked dependency versions (tracked by Git)
+└── uv.lock                  
 ```
 
 ## Clone and download data
