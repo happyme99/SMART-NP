@@ -47,7 +47,7 @@ The example input files are distributed separately through the [data-v1 release]
 uv run scripts/download_data.sh
 ```
 
-The release contains 46 TSV/PT files: 11 each for MolFormer, GIN, NaFM, and NPClassifier, plus the shared `random_train.tsv` and `random_test.tsv`. MolFormer uses those shared tables for its train and test embeddings because it has no model-specific train/test tables in the archive. All four full random test sets contain 7,816 rows. The GIN example below uses its own matching files.
+The release contains 46 TSV/PT files: 11 each for MolFormer, GIN, NaFM, and NPClassifier, plus the shared `random_train.tsv` and `random_test.tsv`. MolFormer uses those shared tables for its train and test embeddings because it has no model-specific train/test tables in the archive. All four backbones use the same molecules, labels, and row order in each random split: 62,528 train rows, 7,816 test rows, 3,908 validation rows, and 3,908 calibration rows. MolFormer validation/calibration embeddings and softmax were rearranged to match these splits while preserving its predictions. Re-download the release if you downloaded it before October 13, 2026. The GIN example below uses its own matching files.
 
 ## Setup
 
