@@ -8,15 +8,42 @@ The diagram shows the full routing design. This repository's `run` command write
 
 ## Repository layout
 
-| Path | Contents |
-| --- | --- |
-| `src/` | CLI, LFDR routing, embedding retrieval, descriptor ranking, prompt construction, and LLM inference |
-| `scripts/` | Environment, model, and run commands |
-| `configs/models.json` | GGUF model registry; default: `qwen3.5-9b` |
-| `pyproject.toml`, `uv.lock` | Python dependencies, CLI entry point, and locked versions (tracked by Git) |
-| `data/README.md` | Input layout and example paths |
-| `SMART-NP/`, `.tools/`, `models/`, `data/descriptor-ranks/`, `data/uncertain/`, `results/` | Local environment, downloads, caches, and outputs (ignored by Git) |
-| `data/dataset/` | Input directory included in Git; downloaded files remain ignored |
+```text
+.
+├── .gitignore
+├── .tools/                  # llama.cpp source and build (gitignored)
+├── .venv/                   # Local uv environment (gitignored)
+├── README.md
+├── SMART-NP/                # Python environment created by build_env.sh (gitignored)
+├── configs/
+│   └── models.json          # GGUF model registry; default: qwen3.5-9b
+├── data/
+│   ├── README.md            # Input layout and example paths
+│   ├── dataset/             # Downloaded TSV/PT inputs (gitignored)
+│   │   └── .gitkeep         # Keeps the empty input directory in Git
+│   ├── descriptor-ranks/    # Descriptor ranks per split (gitignored)
+│   └── uncertain/           # LFDR uncertain-sample caches (gitignored)
+├── full_pipeline.png
+├── models/                  # Downloaded GGUF models (gitignored)
+├── pyproject.toml           # Python dependencies and CLI entry point
+├── results/                 # LLM prediction TSV files (gitignored)
+├── scripts/
+│   ├── build_env.sh         # Create the Python environment
+│   ├── build_model.sh       # Build llama.cpp and download the model
+│   ├── download_data.sh     # Download, verify, and extract release inputs
+│   └── run.sh               # Set up and run inference
+├── src/
+│   ├── cli.py               # Command-line arguments
+│   ├── confidence/          # MSP local-FDR routing
+│   ├── data.py              # Input loading and validation
+│   ├── descriptor/          # RDKit descriptors and class-specific ranks
+│   ├── llm/                 # llama-server and label extraction
+│   ├── model_setup.py       # Model registry, downloads, and llama.cpp setup
+│   ├── prompt.py            # Prompt construction
+│   ├── retrieval/           # Training-example retrieval by embedding
+│   └── runner.py            # Inference pipeline
+└── uv.lock                  # Locked dependency versions (tracked by Git)
+```
 
 ## Clone and download data
 
