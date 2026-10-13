@@ -74,7 +74,8 @@ def run(
         query_vectors = query_vectors[torch.tensor(uncertain["source_row_idx"].to_numpy(), dtype=torch.long)]
         query = uncertain.reset_index(drop=True)
         print(f"LFDR uncertain\tsamples={len(query)}/{len(annotated)}\tlfdr_limit=0.05\tsaved={uncertain_path}", flush=True)
-    descriptor_table = ROOT / "data/descriptor-ranks/descriptor_selection_results.tsv"
+    split = next((part for part in train_table.stem.split("_") if part in {"random", "scaffold", "logp"}), train_table.stem)
+    descriptor_table = ROOT / "data/descriptor-ranks" / f"{split}_descriptor_selection_results.tsv"
     
     if not descriptor_table.is_file():
         rank_descriptors(train, descriptor_table, topk=max(6, descriptor_topk))

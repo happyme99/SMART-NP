@@ -47,6 +47,8 @@ The example input files are distributed separately through the [data-v1 release]
 uv run scripts/download_data.sh
 ```
 
+The script displays download and extraction progress bars with transfer speed and estimated time remaining, and verifies the SHA-256 checksum before extraction.
+
 The release contains 46 TSV/PT files: 11 each for MolFormer, GIN, NaFM, and NPClassifier, plus the shared `random_train.tsv` and `random_test.tsv`. MolFormer uses those shared tables for its train and test embeddings because it has no model-specific train/test tables in the archive. All four backbones use the same molecules, labels, and row order in each random split: 62,528 train rows, 7,816 test rows, 3,908 validation rows, and 3,908 calibration rows. MolFormer validation/calibration embeddings and softmax were rearranged to match these splits while preserving its predictions. Re-download the release if you downloaded it before October 13, 2026. The GIN example below uses its own matching files.
 
 ## Setup
@@ -86,4 +88,4 @@ uv run scripts/run.sh \
   --output results/gin_results.tsv --max-queries 100 # Optional
 ```
 
-The first run ranks descriptors into `data/descriptor-ranks/descriptor_selection_results.tsv` and saves routed test rows in `data/uncertain/gin_random_test_softmax_lfdr_uncertain_samples.tsv`. Later runs reuse these files. Without `--output`, LLM predictions go to a timestamped TSV under `results/` with `SMILES`, `true`, `backbone_pred`, and `llm_pred`; printed accuracy covers those routed rows only. Use `--output PATH` for a fixed result path and `--resume` to continue that file.
+The first run ranks descriptors into `data/descriptor-ranks/random_descriptor_selection_results.tsv` and saves routed test rows in `data/uncertain/gin_random_test_softmax_lfdr_uncertain_samples.tsv`. Descriptor ranks are named using the `random`, `scaffold`, or `logp` token in the train table filename, so each split generates and reuses its own ranks across backbones. Other filenames use the train table stem as the prefix. The old unprefixed `descriptor_selection_results.tsv` is not reused. If you change the training data within a split, remove that split's rank file to recompute it. Without `--output`, LLM predictions go to a timestamped TSV under `results/` with `SMILES`, `true`, `backbone_pred`, and `llm_pred`; printed accuracy covers those routed rows only. Use `--output PATH` for a fixed result path and `--resume` to continue that file.
