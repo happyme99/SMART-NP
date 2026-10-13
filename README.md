@@ -55,18 +55,18 @@ Choose the command for the step you want. Run it from the repository root:
 
 | Goal | Command |
 | --- | --- |
-| Create the Python environment only | `./scripts/build_env.sh` |
-| Create the environment, build `llama.cpp`, and download Qwen | `./scripts/build_model.sh` |
-| Do the setup and run inference | `./scripts/run.sh` with the input files shown below |
+| Create the Python environment only | `uv run scripts/build_env.sh` |
+| Create the environment, build `llama.cpp`, and download Qwen | `uv run scripts/build_model.sh` |
+| Do the setup and run inference | `uv run scripts/run.sh` with the input files shown below |
 
-`build_env.sh` uses `pyproject.toml` and `uv.lock` to create `SMART-NP/`. Keep both files in Git. `build_model.sh` also runs that step, then builds `.tools/llama.cpp/build/bin/llama-server` and downloads the default `Qwen3.5-9B-Q4_K_M.gguf` to `models/qwen3.5-9b/`. `run.sh` sets up the environment and, unless `--model-path` is supplied, also sets up the model before inference. Existing files are reused.
+`build_env.sh` uses `pyproject.toml` and `uv.lock` to create `SMART-NP/`. Keep both files in Git. `build_model.sh` also runs that step, then builds `.tools/llama.cpp/build/bin/llama-server` and downloads the default `Qwen3.5-9B-Q4_K_M.gguf` to `models/qwen3.5-9b/`. `run.sh` sets up the environment and, unless `--model-path` is supplied, also sets up the model before inference.
 
-Requirements: Python 3.10+, `git`, `cmake`, and CUDA with `nvcc` for the default model build. For a CPU build, use `./scripts/build_model.sh --cpu` and pass `--model-path models/qwen3.5-9b/Qwen3.5-9B-Q4_K_M.gguf` to `run.sh`.
+Requirements: Python 3.10+, `git`, `cmake`, and CUDA with `nvcc` for the default model build. For a CPU build, use `uv run scripts/build_model.sh --cpu` and pass `--model-path models/qwen3.5-9b/Qwen3.5-9B-Q4_K_M.gguf` to `uv run scripts/run.sh`.
 
 For another model, add it to `configs/models.json` and pass `--model NAME` to `build_model.sh` and `run.sh`. To download an unregistered model, supply its local path when running:
 
 ```bash
-./scripts/build_model.sh --model my-model --model-repo org/repo --model-file model.gguf
+uv run scripts/build_model.sh --model my-model --model-repo org/repo --model-file model.gguf
 # Add --model my-model --model-path models/my-model/model.gguf to the run command below.
 ```
 
@@ -75,7 +75,7 @@ For another model, add it to `configs/models.json` and pass `--model NAME` to `b
 Input tables need `SMILES` and `true_class` columns. Embedding `.pt` files need a 2D tensor in table row order; softmax `.pt` files need `probabilities` and `class_to_idx`. Train, test, and calibration files must use matching rows within each split. The downloaded inputs under `data/dataset/` remain outside Git.
 
 ```bash
-./scripts/run.sh \
+uv run scripts/run.sh \
   --train-table data/dataset/gin_random_train.tsv \
   --train-embeddings data/dataset/gin_random_train_emb.pt \
   --test-table data/dataset/gin_random_test.tsv \
