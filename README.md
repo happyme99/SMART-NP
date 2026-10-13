@@ -83,8 +83,7 @@ uv run scripts/run.sh \
   --test-softmax data/dataset/gin_random_test_softmax.pt \
   --calibration-table data/dataset/gin_random_calibration.tsv \
   --calibration-softmax data/dataset/gin_random_calibration_softmax.pt \
-  --output results/gin_results.tsv \
-  --max-queries 100
+  --output results/gin_results.tsv --max-queries 100 # Optional
 ```
 
 The example processes the first 100 uncertain samples and writes results to `results/gin_results.tsv`. Omit `--max-queries` to process all uncertain samples.
