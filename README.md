@@ -83,7 +83,8 @@ uv run scripts/run.sh \
   --test-softmax data/dataset/gin_random_test_softmax.pt \
   --calibration-table data/dataset/gin_random_calibration.tsv \
   --calibration-softmax data/dataset/gin_random_calibration_softmax.pt \
-  --output results/gin_results.tsv --max-queries 100 # Optional
+  --output results/gin_results.tsv \  # Optional
+  --max-queries 100  # Optional
 ```
 
 The first run ranks descriptors into `data/descriptor-ranks/descriptor_selection_results.tsv` and saves routed test rows in `data/uncertain/gin_random_test_softmax_lfdr_uncertain_samples.tsv`. Later runs reuse these files. Without `--output`, LLM predictions go to a timestamped TSV under `results/` with `SMILES`, `true`, `backbone_pred`, and `llm_pred`; printed accuracy covers those routed rows only. Use `--output PATH` for a fixed result path and `--resume` to continue that file.
