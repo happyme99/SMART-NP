@@ -47,7 +47,7 @@ The diagram shows the full pipeline.
 
 ## Clone and download data
 
-Clone the private repository with your GitHub credentials:
+Clone the repository:
 
 ```bash
 git clone https://github.com/happyme99/SMART-NP.git
